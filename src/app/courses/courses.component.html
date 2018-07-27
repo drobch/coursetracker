@@ -1,0 +1,19 @@
+<mat-card *ngFor="let course of courses">
+  <mat-card-header>
+    <img mat-card-avatar src="https://source.unsplash.com/random/200x200">
+    <mat-card-title >
+      <a (click)="viewCourse(course)" ></a>
+        {{course.title}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      <div *ngIf="course.status">Open</div>
+      <div *ngIf="!course.status">Closed</div>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-lg-image mat-card-image src="https://source.unsplash.com/random/500x500">
+  <mat-card-content>
+    <div>
+      <p>{{course.description}}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
