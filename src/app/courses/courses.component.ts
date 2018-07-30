@@ -2,8 +2,9 @@ import { Component, Output, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ICourse } from '../shared/models/Course';
 import { CoursesService } from '../services/courses.service';
-import { ActivatedRoute } from '@angular/router';
-import { RouterModule, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses',
@@ -11,29 +12,30 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  @Output() course: ICourse;
-  courses: ICourse[];
+
+  private selectedId: number;
+  courses$: Observable<ICourse[]>;
+  favorites: Set<number> = new Set();
 
   constructor(
     private coursesService: CoursesService,
-    private router: Router
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getCourses();
-  }
-
-  getCourses() {
-    this.coursesService.
-    getCourses().
-    subscribe(
-      data => this.courses = data,
-      error => console.log(error)
+    this.courses$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.selectedId = +params.get('id');
+        return this.coursesService.getCourses();
+      })
     );
   }
-
-  viewCourse(course) {
-    this.router.navigate(['/courses', course.id]);
+  addFav(i) {
+    if (this.favorites.has(i)) {
+      this.favorites.delete(i);
+    } else {
+      this.favorites.add(i);
+    }
   }
 
 /*

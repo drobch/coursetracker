@@ -1,19 +1,25 @@
-<mat-card *ngFor="let course of courses">
-  <mat-card-header>
-    <img mat-card-avatar src="https://source.unsplash.com/random/200x200">
-    <mat-card-title >
-      <a (click)="viewCourse(course)" ></a>
-        {{course.title}}
-    </mat-card-title>
-    <mat-card-subtitle>
-      <div *ngIf="course.status">Open</div>
-      <div *ngIf="!course.status">Closed</div>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-lg-image mat-card-image src="https://source.unsplash.com/random/500x500">
+<mat-card *ngFor="let i = index; let crs of courses$| async" class="course-card">
+
+  <mat-card-title [routerLink]="['/courses', crs.id]">
+    {{crs.title}}
+  </mat-card-title>
   <mat-card-content>
-    <div>
-      <p>{{course.description}}</p>
-    </div>
+
+    <mat-card-subtitle>
+      {{crs.progress}}/100 currently
+      <div *ngIf="crs.status">Open</div>
+      <div *ngIf="!crs.status">Closed</div>
+    </mat-card-subtitle>
+
+    <img mat-card-lg-image mat-card-image src="https://source.unsplash.com/random/500x500">
+
+
   </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-flat-button (click)="addFav(i)">
+      <i class="material-icons md-18" [class.red-color]="favorites.has(i)">favorite</i>add to favorites
+    </button>
+  </mat-card-actions>
+
 </mat-card>

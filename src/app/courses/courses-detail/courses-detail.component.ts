@@ -2,8 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ICourse } from '../../shared/models/Course';
 import { CoursesService } from '../../services/courses.service';
-import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-courses-detail',
@@ -11,32 +14,29 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./courses-detail.component.scss']
 })
 export class CoursesDetailComponent implements OnInit {
-
-  @Input() course: ICourse;
-  courseID: string;
+  private subscription: Subscription;
+  id: number;
+  course$: Observable<ICourse>;
+  courseInfo$ = {};
 
   constructor(
     private coursesService: CoursesService,
-    private location: Location,
-    private route: ActivatedRoute
-  ) {
-    this.courseID = route.snapshot.params['id'];
-  }
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-
- /* getCourses() {
-    this.coursesService.
-    getCourse().
-    subscribe(
-      data => this.course = data,
-      error => console.log(error)
+    this.course$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.coursesService.getCourse(params.get('id')))
     );
-  }*/
+    this.courseInfo$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.coursesService.getCourseDetail(params.get('id')))
+    );
+  }
+  gotoCourses() {
+    this.router.navigate(['/courses']);
+  }
+
 }

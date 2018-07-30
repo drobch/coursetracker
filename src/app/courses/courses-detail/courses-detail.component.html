@@ -1,17 +1,23 @@
 
-<mat-card>
+<mat-card *ngIf="course$">
   <mat-tab-group [selectedIndex]="1">
-    <mat-tab label="Main">
-      <h3>{{course.title}}}</h3>
-      <p>{{course.status}}}</p>
-      <p>{{course.progress}}}</p>
-      <p>{{course.lastUpdate}}}</p>
-    </mat-tab>
-    <mat-tab label="Description">
-      <h3>{{course.title}}}</h3>
-      <p>{{course.description}}}</p>
-    </mat-tab>
+    <mat-tab label="Main" *ngIf="course$ | async as crs">
+      <h3>"{{ crs.title }}"</h3>
+      <div >
+        <label>Progress: </label>{{ crs.progress }}
+        <label>Status: </label>{{ crs.status}}
+      </div>
 
+    </mat-tab>
+    <mat-tab label="Description" *ngIf="courseInfo$ | async as crsInfo">
+      <div>
+        <label>Description: </label>{{ crsInfo.description}}
+        <label>Recommendation: </label>{{ crsInfo.recommendations}}
+      </div>
+    </mat-tab>
   </mat-tab-group>
+  <p>
+    <button (click)="gotoCourses()">back</button>
+  </p>
 </mat-card>
 
