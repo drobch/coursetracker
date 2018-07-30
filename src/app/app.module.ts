@@ -15,6 +15,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailComponent } from './courses/courses-detail/courses-detail.component';
 
 import { Router } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -22,7 +25,10 @@ import { Router } from '@angular/router';
   declarations: [
     AppComponent,
     CoursesComponent,
-    CoursesDetailComponent
+    CoursesDetailComponent,
+    NavbarComponent,
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
