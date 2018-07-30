@@ -1,7 +1,7 @@
 import UserCourses from './UserCourses';
 
 export interface ICourse {
-  id: string;
+  id: number;
   title: string;
   status: boolean;
   progress?: number;

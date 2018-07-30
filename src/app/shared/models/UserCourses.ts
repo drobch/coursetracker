@@ -1,4 +1,4 @@
 export default class UserCourses {
-  username: string;
-  course: string;
+  idUser: number;
+  idCourse: number;
 }
