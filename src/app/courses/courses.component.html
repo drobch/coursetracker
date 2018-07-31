@@ -1,25 +1,26 @@
-<mat-card *ngFor="let i = index; let crs of courses$| async" class="course-card">
+<div
+  fxLayoutAlign="space-around space-around"
+  fxLayout="row wrap">
+  <mat-card
+    fxFlex="3 1 300px"
+    *ngFor="let i = index; let crs of courses$| async"
+    class="course-card">
+    <mat-card-title [routerLink]="['/courses', crs.id]">
+      {{crs.title}}
+    </mat-card-title>
+    <mat-card-content>
+      <mat-card-subtitle>
+        {{crs.progress}}/100 currently
+        <div *ngIf="crs.status">Open</div>
+        <div *ngIf="!crs.status">Closed</div>
+      </mat-card-subtitle>
+      <img mat-card-lg-image mat-card-image src="https://source.unsplash.com/random/500x500">
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button (click)="addFav(i)">
+        <i class="material-icons md-18" [class.red-color]="favorites.has(i)">favorite</i>add to favorites
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
-  <mat-card-title [routerLink]="['/courses', crs.id]">
-    {{crs.title}}
-  </mat-card-title>
-  <mat-card-content>
-
-    <mat-card-subtitle>
-      {{crs.progress}}/100 currently
-      <div *ngIf="crs.status">Open</div>
-      <div *ngIf="!crs.status">Closed</div>
-    </mat-card-subtitle>
-
-    <img mat-card-lg-image mat-card-image src="https://source.unsplash.com/random/500x500">
-
-
-  </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-flat-button (click)="addFav(i)">
-      <i class="material-icons md-18" [class.red-color]="favorites.has(i)">favorite</i>add to favorites
-    </button>
-  </mat-card-actions>
-
-</mat-card>
