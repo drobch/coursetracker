@@ -13,7 +13,8 @@
          routerLinkActive="active-link">
         Courses
       </a>
-      <a mat-list-item [routerLink]="['/account']">Account</a>
+      <a mat-list-item
+         [routerLink]="['/account']">Account</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -27,7 +28,27 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Course tracker</span>
+      <a
+        mat-list-item
+        fxFlex fxLayout fxLayoutAlign="flex-end"
+        *ngIf="!auth.isAuthenticated()"
+        (click)="auth.login()"
+        [routerLink]="['/login']"
+        type="button">
+        <mat-icon class="logout_icon icon">input</mat-icon>
+      </a>
+      <a
+        mat-list-item
+        fxFlex fxLayout fxLayoutAlign="flex-end"
+        *ngIf="!auth.isAuthenticated()"
+        (click)="auth.logout()"
+        [routerLink]="['/logout']"
+        type="button">
+        <mat-icon class="logout_icon icon">input</mat-icon>
+      </a>
     </mat-toolbar>
     <router-outlet></router-outlet>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
+
