@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { UserService } from './user.service';
-import { User } from '../../../server/models/user';
+import { User } from '../shared/models/user.model';
 
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   loggedIn = false;
-  isAdmin = false;
 
   currentUser: User = new User();
 
@@ -26,20 +25,19 @@ export class AuthService {
   }
 
   login(emailAndPassword) {
-    return this.userService.login(emailAndPassword).map(
+    return this.userService.login(emailAndPassword).pipe(map(
       res => {
         localStorage.setItem('token', res.token);
         const decodedUser = this.decodeUserFromToken(res.token);
         this.setCurrentUser(decodedUser);
         return this.loggedIn;
       }
-    );
+    ));
   }
 
   logout() {
     localStorage.removeItem('token');
     this.loggedIn = false;
-    this.isAdmin = false;
     this.currentUser = new User();
     this.router.navigate(['/']);
   }
@@ -50,11 +48,8 @@ export class AuthService {
 
   setCurrentUser(decodedUser) {
     this.loggedIn = true;
-    this.currentUser._id = decodedUser._id;
+    this.currentUser.id = decodedUser._id;
     this.currentUser.username = decodedUser.username;
-    this.currentUser.role = decodedUser.role;
-    decodedUser.role === 'admin' ? this.isAdmin = true : this.isAdmin = false;
-    delete decodedUser.role;
   }
 
 }

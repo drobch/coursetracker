@@ -14,7 +14,8 @@
         Courses
       </a>
       <a mat-list-item
-         [routerLink]="['/account']">Account</a>
+         [routerLink]="['/account']"
+         *ngIf="!auth.loggedIn">Account</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -31,20 +32,24 @@
       <a
         mat-list-item
         fxFlex fxLayout fxLayoutAlign="flex-end"
-        *ngIf="!auth.isAuthenticated()"
-        (click)="auth.login()"
         [routerLink]="['/login']"
+        *ngIf="!auth.loggedIn"
         type="button">
-        <mat-icon class="logout_icon icon">input</mat-icon>
+        Log In
       </a>
       <a
         mat-list-item
         fxFlex fxLayout fxLayoutAlign="flex-end"
-        *ngIf="!auth.isAuthenticated()"
-        (click)="auth.logout()"
         [routerLink]="['/logout']"
+        *ngIf="auth.loggedIn"
         type="button">
-        <mat-icon class="logout_icon icon">input</mat-icon>
+      </a>
+      <a
+        mat-list-item
+        fxFlex fxLayout fxLayoutAlign="flex-end"
+        [routerLink]="['/register']"
+        *ngIf="!auth.loggedIn"
+        type="button">
       </a>
     </mat-toolbar>
     <router-outlet></router-outlet>

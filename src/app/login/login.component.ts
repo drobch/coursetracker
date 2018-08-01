@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class LoginComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router) { }
 
-
   ngOnInit() {
     if (this.auth.loggedIn) {
       this.router.navigate(['/']);
@@ -48,7 +46,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login(this.loginForm.value).subscribe(
       res => this.router.navigate(['/']),
-      error => false
+      error => alert(error)
     );
   }
 

@@ -1,38 +1,44 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { AuthService } from './services/auth.service';
-
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatCardModule } from '@angular/material/card';
 import {
-  MatTabsModule,
-  MatToolbarModule,
   MatButtonModule,
+  MatToolbarModule,
+  MatTabsModule,
   MatSidenavModule,
-  MatIconModule,
-  MatCheckboxModule,
   MatListModule,
-  MatGridListModule,
   MatMenuModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatIconModule,
   MatInputModule } from '@angular/material';
 
-import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailComponent } from './courses/courses-detail/courses-detail.component';
-
-import { Router } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RegisterComponent } from './register/register.component';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoursesService } from './services/courses.service';
+import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuardLogin } from './services/auth-guard-login.service';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -41,7 +47,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CoursesDetailComponent,
     NavbarComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    PageNotFoundComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +70,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatCheckboxModule,
     MatInputModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        // whitelistedDomains: ['localhost:3000', 'localhost:4200']
+      }
+    })
   ],
-  providers: [AuthService],
+  providers: [
+    CoursesService,
+    UserService,
+    AuthService,
+    AuthGuardLogin
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

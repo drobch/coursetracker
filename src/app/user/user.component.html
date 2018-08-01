@@ -1,3 +1,26 @@
-<p>
-  user works!
-</p>
+<div class="card">
+  <h4 class="card-header">Account settings</h4>
+  <div class="card-body">
+    <form #accountForm="ngForm">
+      <div>
+        <input
+          class="form-control"
+          type="text" name="username"
+          [(ngModel)]="user.username"
+          placeholder="Username"
+          required>
+      </div>
+      <div>
+        <input
+          class="form-control"
+          type="email" name="email"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          required>
+      </div>
+      <button class="mat-button" type="submit" [disabled]="!accountForm.form.valid">
+        Save
+      </button>
+    </form>
+  </div>
+</div>

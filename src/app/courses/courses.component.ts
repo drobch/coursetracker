@@ -1,6 +1,6 @@
 import { Component, Output, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { ICourse } from '../shared/models/Course';
+import { Course } from '../shared/models/course.model';
 import { CoursesService } from '../services/courses.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
 export class CoursesComponent implements OnInit {
 
   private selectedId: number;
-  courses$: Observable<ICourse[]>;
+  courses$: Observable<Course[]>;
   favorites: Set<number> = new Set();
 
   constructor(

@@ -1,8 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import * as mongoose from 'mongoose';
 import userCoursesSchema from './userCourses';
-import Course from './course';
-
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -26,7 +24,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  courses: [ userCoursesSchema ]
+  courses: [userCoursesSchema]
 });
 
 // hash password before saving

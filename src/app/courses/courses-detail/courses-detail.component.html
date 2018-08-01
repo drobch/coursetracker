@@ -1,5 +1,5 @@
-
 <mat-card *ngIf="course$">
+
   <mat-tab-group [selectedIndex]="1">
     <mat-tab label="Main" *ngIf="course$ | async as crs">
       <h3>"{{ crs.title }}"</h3>

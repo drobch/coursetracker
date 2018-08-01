@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
+
+import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
+
 import { Routes, RouterModule } from '@angular/router';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailComponent } from './courses/courses-detail/courses-detail.component';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
-import {NavbarComponent} from './navbar/navbar.component';
+import { RegisterComponent } from './register/register.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuardLogin } from './services/auth-guard-login.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
-  // { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/courses', pathMatch: 'full' },
 
   { path: 'account', component: NavbarComponent,
-    children: [{path: '', component: UserComponent}]},
+    children: [{path: '', canActivate: [AuthGuardLogin], component: UserComponent}]},
 
   { path: 'courses', component: NavbarComponent,
     children: [{path: '', component: CoursesComponent}]},
@@ -20,7 +28,7 @@ const routes: Routes = [
   { path: 'courses/:id', component: NavbarComponent,
     children: [{path: '', component: CoursesDetailComponent}]},
 
-  { path: '**', redirectTo: '/courses', pathMatch: 'full'}
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

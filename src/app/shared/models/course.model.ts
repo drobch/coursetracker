@@ -1,6 +1,6 @@
 import UserCourses from './UserCourses';
 
-export interface ICourse {
+export class Course {
   id: number;
   title: string;
   status: boolean;

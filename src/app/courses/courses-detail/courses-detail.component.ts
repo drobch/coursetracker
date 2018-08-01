@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ICourse } from '../../shared/models/Course';
 import { CoursesService } from '../../services/courses.service';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
-
+import {Course} from '../../shared/models/course.model';
 
 @Component({
   selector: 'app-courses-detail',
@@ -16,8 +15,13 @@ import { Observable } from 'rxjs';
 export class CoursesDetailComponent implements OnInit {
   private subscription: Subscription;
   id: number;
-  course$: Observable<ICourse>;
+  course$: Observable<Course>;
   courseInfo$ = {};
+
+  color = 'primary';
+  mode = 'determinate';
+  value = 50;
+  bufferValue = 75;
 
   constructor(
     private coursesService: CoursesService,
@@ -35,6 +39,7 @@ export class CoursesDetailComponent implements OnInit {
         this.coursesService.getCourseDetail(params.get('id')))
     );
   }
+
   gotoCourses() {
     this.router.navigate(['/courses']);
   }

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable, throwError} from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, find, filter } from 'rxjs/operators';
+import { User } from '../shared/models/user.model';
+import { USERS } from '../mock/users';
 
-import { User } from '../../../server/models/user';
+@Injectable({
+  providedIn: 'root'
+})
 
-@Injectable()
 export class UserService {
 
   constructor(private http: HttpClient) { }
@@ -17,28 +21,10 @@ export class UserService {
     return this.http.post('/api/login', credentials);
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('/api/users');
+  getUser(id): Observable<User> {
+    return from(USERS).pipe(
+      filter(crs => crs.id === +id)
+    );
   }
-
-  countUsers(): Observable<number> {
-    return this.http.get<number>('/api/users/count');
-  }
-
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>('/api/user', user);
-  }
-
-  getUser(user: User): Observable<User> {
-    return this.http.get<User>(`/api/user/${user._id}`);
-  }
-
-  editUser(user: User): Observable<any> {
-    return this.http.put(`/api/user/${user._id}`, user, { responseType: 'text' });
-  }
-
-  deleteUser(user: User): Observable<any> {
-    return this.http.delete(`/api/user/${user._id}`, { responseType: 'text' });
-  }
-
 }
+

@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-
-import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-
 import { Observable, throwError } from 'rxjs';
-import {catchError, find} from 'rxjs/operators';
+import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, find } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
-import { ICourse } from '../shared/models/Course';
+
+import { Course } from '../shared/models/course.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CoursesService {
-
 
   private urlCourses = 'https://my.api.mockaroo.com/courses.json?key=e6390a40';
   private urlCourse = 'https://my.api.mockaroo.com/course.json?key=e6390a40';
@@ -46,8 +44,8 @@ export class CoursesService {
 
   constructor(private http: HttpClient) { }
 
-  getCourses(): Observable<ICourse[]> {
-    return this.http.get<ICourse[]>(this.urlCourses).pipe(
+  getCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(this.urlCourses).pipe(
       map(res => res),
       catchError((err) => err.code === 404
       ? throwError('Not found 404')
@@ -55,8 +53,8 @@ export class CoursesService {
       )
     );
   }
-  getCourse(id: number | string): Observable<ICourse> {
-    return this.http.get<ICourse[]>(this.urlCourses).pipe(
+  getCourse(id: number | string): Observable<Course> {
+    return this.http.get<Course[]>(this.urlCourses).pipe(
       map(courses => courses.find(crs => crs.id === +id)),
       catchError((err) => err.code === 404
         ? throwError('Not found 404')
@@ -65,8 +63,8 @@ export class CoursesService {
     );
   }
 
-  getCourseDetail(id: number | string): Observable<ICourse> {
-    return this.http.get<ICourse[]>(this.urlCourse).pipe(
+  getCourseDetail(id: number | string): Observable<Course> {
+    return this.http.get<Course[]>(this.urlCourse).pipe(
       map(courses => courses.find(crs => crs.id === +id)),
       catchError((err) => err.code === 404
         ? throwError('Not found 404')
