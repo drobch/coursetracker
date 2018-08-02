@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   ]);
   password = new FormControl('', [
     Validators.required,
-    Validators.pattern(/^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{4,20}/)
+    Validators.minLength(3)
   ]);
 
   constructor(private auth: AuthService,
@@ -40,14 +40,20 @@ export class LoginComponent implements OnInit {
   }
   getErrorPass() {
     return this.password.hasError('required') ? 'You must enter a value' :
-      this.password.hasError('pattern') ? 'Invalid password' : '';
+      this.password.hasError('minLength') ? 'Too short' : '101010';
   }
 
   login() {
+    console.log(this.loginForm.value);
     this.auth.login(this.loginForm.value).subscribe(
-      res => this.router.navigate(['/']),
-      error => alert(error)
+      res => this.router.navigate(['/courses']),
+      error => console.log(error)
     );
+  }
+
+
+  lll() {
+    console.log(2232323);
   }
 
 
