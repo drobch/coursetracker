@@ -12,7 +12,7 @@ mongoose.connection.on('connected', () => {
  console.log('connected to db ' + config.database)
 });
 
-mongoose.connection.on('eroor', (error) => {
+mongoose.connection.on('error', (error) => {
   console.log('error ' + error)
 });
 
@@ -25,7 +25,11 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
+app.use(passport.initialize());
+app.use(passport.session());
 
+
+require('./config/passport')(passport);
 
 app.use('/users', users)
 app.listen(port, () => {
