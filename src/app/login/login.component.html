@@ -1,33 +1,37 @@
 <div fxLayout="column"
      fxLayoutAlign="center center"
      class="content">
-  <form
-    [formGroup]="loginForm"
-    (ngSubmit)="login()"
-    class="card login-card">
-    <div fxLayout="column">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Enter your email"
-          [formControl]="email">
-        <mat-error *ngIf="email.invalid">
-          {{getErrorEmail()}}
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Enter your password"
-          [formControl]="password">
-        <mat-error *ngIf="password.invalid">
-          {{getErrorPass()}}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-      <button type="submit" [disabled]="!loginForm.valid">Submit</button>
-  </form>
+  <mat-card>
+    <h4 fxLayoutAlign="center">Log In</h4>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+      class="card">
+      <div fxLayout="column">
+        <mat-form-field>
+          <input
+            matInput placeholder="Email"
+            [formControl]="email">
+          <mat-error *ngIf="email.invalid">
+            {{getErrorEmail()}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput placeholder="Password"
+            [formControl]="password"
+            type="password">
+          <mat-error *ngIf="password.invalid">
+            {{getErrorPass()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button color="primary" type="submit" [disabled]="!loginForm.valid">Submit</button>
+        <a mat-button color="primary" routerLink="/register">Register</a>
+      </div>
+    </form>
+  </mat-card>
 </div>
 
 

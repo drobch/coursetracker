@@ -52,9 +52,4 @@ export class LoginComponent implements OnInit {
   }
 
 
-  lll() {
-    console.log(2232323);
-  }
-
-
 }
