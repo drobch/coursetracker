@@ -11,20 +11,19 @@ import { USERS } from '../mock/users';
 
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   register(user: User): Observable<User> {
-    return this.http.post<User>('/api/user', user);
+    return this.http.post<User>('/users/register', user);
   }
 
   login(credentials): Observable<any> {
-    return this.http.post('/api/login', credentials);
+    return this.http.post('/users/login', credentials);
   }
 
   getUser(id): Observable<User> {
-    return from(USERS).pipe(
-      filter(crs => crs.id === +id)
-    );
+    return this.http.post('/users/account', id);
   }
-}
 
+}

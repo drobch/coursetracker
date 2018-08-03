@@ -12,65 +12,38 @@ import { Course } from '../shared/models/course.model';
 
 export class CoursesService {
 
-  private urlCourses = 'https://my.api.mockaroo.com/courses.json?key=e6390a40';
-  private urlCourse = 'https://my.api.mockaroo.com/course.json?key=e6390a40';
-  /*private courses: ICourse[] = [
-    {
-      id: '1',
-      title: 'English',
-      description: 'Descriptrssfksfsjfion."',
-      status: false
-    },
-    {
-      id: '2',
-      title: 'English fff',
-      description: 'Descriptrssfksfsjfion.',
-      status: false
-    },
-    {
-      id: '3',
-      title: 'English jjjj',
-      description: 'Descriptrssfksfsjfion.',
-      status: false
-    },
-    {
-      id: '4',
-      title: 'English yjyj',
-      description: 'Descriptrssfksfsjfion.',
-      status: false
-    }
-  ];*/
-
-
   constructor(private http: HttpClient) { }
 
   getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.urlCourses).pipe(
-      map(res => res),
-      catchError((err) => err.code === 404
-      ? throwError('Not found 404')
-      : throwError(err)
-      )
-    );
-  }
-  getCourse(id: number | string): Observable<Course> {
-    return this.http.get<Course[]>(this.urlCourses).pipe(
-      map(courses => courses.find(crs => crs.id === +id)),
-      catchError((err) => err.code === 404
-        ? throwError('Not found 404')
-        : throwError(err)
-      )
-    );
+    return this.http.get<Course>('/api/courses');
   }
 
-  getCourseDetail(id: number | string): Observable<Course> {
-    return this.http.get<Course[]>(this.urlCourse).pipe(
-      map(courses => courses.find(crs => crs.id === +id)),
-      catchError((err) => err.code === 404
-        ? throwError('Not found 404')
-        : throwError(err)
-      )
-    );
+  addCourse(course: Course): Observable<Course> {
+    return this.http.post<Course>('/api/cat', course);
   }
+
+  getCourse(course: Course): Observable<Course> {
+    return this.http.get<Course>(`/Courses/${Course.id}`);
+  }
+
+  /*  getCourse(id: number | string): Observable<Course> {
+      return this.http.get<Course[]>('/courses/:id').pipe(
+        map(courses => courses.find(crs => crs.id === +id)),
+        catchError((err) => err.code === 404
+          ? throwError('Not found 404')
+          : throwError(err)
+        )
+      );
+    }
+
+    getCourseDetail(id: number | string): Observable<Course> {
+      return this.http.get<Course[]>(this.urlCourse).pipe(
+        map(courses => courses.find(crs => crs.id === +id)),
+        catchError((err) => err.code === 404
+          ? throwError('Not found 404')
+          : throwError(err)
+        )
+      );
+    }*/
 }
 
