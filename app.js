@@ -23,7 +23,7 @@ const courses = require('./routes/courses');
 app.use(cors());
 
 // Set Static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.json());
 
 app.use(passport.initialize());
