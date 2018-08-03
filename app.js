@@ -19,6 +19,7 @@ mongoose.connection.on('error', (error) => {
 const app = express();
 const port = 3000;
 const users = require('./routes/users');
+const courses = require('./routes/courses');
 app.use(cors());
 
 // Set Static folder
@@ -31,7 +32,9 @@ app.use(passport.session());
 
 require('./config/passport')(passport);
 
-app.use('/users', users)
+app.use('/user', users);
+app.use('/', courses);
+
 app.listen(port, () => {
   console.log("running on port 3000");
 })

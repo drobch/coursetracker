@@ -27,17 +27,13 @@ const Course = module.exports = mongoose.model('Course', courseSchema);
 
 module.exports.getCourseById = function (id, cb) {
   Course.findById(id, cb)
-}
+};
+
 
 module.exports.getAll = function (cb) {
-  Course.find(cb)
-}
-
-module.exports.getCourseByUsername = function (id, cb) {
-  const query = { title: title };
-  Course.findOne(query, cb)
-}
+  Course.find({}, cb);
+};
 
 module.exports.addCourse = function (newCourse, cb) {
   newCourse.save(cb)
-}
+};
