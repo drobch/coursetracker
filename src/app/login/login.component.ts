@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators  } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,45 +11,48 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  email = new FormControl('', [
-    Validators.required,
-    Validators.email
+  username = new FormControl('', [
+    Validators.required
   ]);
   password = new FormControl('', [
     Validators.required,
     Validators.minLength(3)
   ]);
 
-  constructor(private auth: AuthService,
+  constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
-    if (this.auth.loggedIn) {
-      this.router.navigate(['/']);
-    }
     this.loginForm = this.formBuilder.group({
-      email: this.email,
+      username: this.username,
       password: this.password
     });
+    console.log(this.loginForm);
   }
 
-  getErrorEmail() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' : '';
+  getErrorUsername() {
+    return this.username.hasError('required') ? 'You must enter a value' : '';
   }
-  getErrorPass() {
+
+  getErrorPassword() {
     return this.password.hasError('required') ? 'You must enter a value' :
-      this.password.hasError('minLength') ? 'Too short' : '101010';
+      this.password.hasError('minLength') ? 'Too short' : '';
   }
 
   login() {
-    console.log(this.loginForm.value);
-    this.auth.login(this.loginForm.value).subscribe(
-      res => this.router.navigate(['/courses']),
-      error => console.log(error)
-    );
+    this.authService.login(this.loginForm.value).subscribe(data => {
+      console.log(data);
+     if (data.success) {
+        console.log('you successfully logged in!');
+        this.authService.storeUserData(data.token, data.user);
+        this.router.navigate(['/courses']);
+      } else {
+        alert(data.msg);
+        this.router.navigate(['/login']);
+      }
+    });
   }
-
 
 }

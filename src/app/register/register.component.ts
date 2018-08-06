@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private userService: UserService) { }
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -56,12 +55,12 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.userService.register(this.registerForm.value).subscribe(
-      res => {
+    this.authService.registerUser(this.registerForm.value).subscribe(
+      (res) => {
         alert('you successfully registered!');
         this.router.navigate(['/login']);
       },
-      error => alert('email already exists')
+      error => console.error(error)
     );
   }
 }

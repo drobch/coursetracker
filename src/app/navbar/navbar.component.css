@@ -19,3 +19,7 @@
 mat-toolbar {
   z-index: 1000;
 }
+
+.logout_btn {
+  width: 100%;
+}

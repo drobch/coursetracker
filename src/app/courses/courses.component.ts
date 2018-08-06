@@ -1,7 +1,6 @@
 import { Component, Output, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Course } from '../shared/models/course.model';
-import { CoursesService } from '../services/courses.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -13,22 +12,21 @@ import { switchMap } from 'rxjs/operators';
 })
 export class CoursesComponent implements OnInit {
 
-  private selectedId: number;
+  private selectedId: string;
   courses$: Observable<Course[]>;
   favorites: Set<number> = new Set();
 
   constructor(
-    private coursesService: CoursesService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.courses$ = this.route.paramMap.pipe(
+/*    this.courses$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        this.selectedId = +params.get('id');
+        this.selectedId = params.get('id');
         return this.coursesService.getCourses();
       })
-    );
+    );*/
   }
   addFav(i) {
     if (this.favorites.has(i)) {

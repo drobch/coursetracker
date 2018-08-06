@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CoursesService } from '../../services/courses.service';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,26 +17,16 @@ export class CoursesDetailComponent implements OnInit {
   course$: Observable<Course>;
   courseInfo$ = {};
 
-  color = 'primary';
-  mode = 'determinate';
-  value = 50;
-  bufferValue = 75;
-
   constructor(
-    private coursesService: CoursesService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
 
   ngOnInit() {
-    this.course$ = this.route.paramMap.pipe(
+/*    this.course$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.coursesService.getCourse(params.get('id')))
-    );
-    this.courseInfo$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.coursesService.getCourseDetail(params.get('id')))
-    );
+    );*/
   }
 
   gotoCourses() {

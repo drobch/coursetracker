@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap } from '@angular/router';
-import { CoursesService } from '../services/courses.service';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from '../shared/models/user.model';
-import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -14,21 +13,20 @@ import { AuthService } from '../services/auth.service';
 })
 export class UserComponent implements OnInit {
 
-  private selectedId: number;
   user: User;
+
   constructor(
-    private route: ActivatedRoute,
-    private auth: AuthService,
-    private userService: UserService) {}
+    private router: Router,
+    private authService: AuthService) {}
 
   ngOnInit() {
-    this.getUser();
+    this.authService.getUser().subscribe(profile => {
+      this.user = profile.user;
+    },
+    err => {
+      console.log(err);
+      return false;
+    });
   }
 
-  getUser() {
-    this.userService.getUser(this.auth.currentUser.id).subscribe(
-      data => this.user = data,
-      error => console.log(error)
-    );
-  }
 }

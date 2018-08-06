@@ -17,10 +17,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  { path: '', redirectTo: '/courses', pathMatch: 'full' },
+  { path: '', redirectTo: 'courses', pathMatch: 'full' },
 
   { path: 'account', component: NavbarComponent,
-    children: [{path: '', canActivate: [AuthGuardLogin], component: UserComponent}]},
+    children: [{path: '', component: UserComponent}]},
 
   { path: 'courses', component: NavbarComponent,
     children: [{path: '', component: CoursesComponent}]},

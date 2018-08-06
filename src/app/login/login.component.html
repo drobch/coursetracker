@@ -10,10 +10,10 @@
       <div fxLayout="column">
         <mat-form-field>
           <input
-            matInput placeholder="Email"
-            [formControl]="email">
-          <mat-error *ngIf="email.invalid">
-            {{getErrorEmail()}}
+            matInput placeholder="Username"
+            [formControl]="username">
+          <mat-error *ngIf="username.invalid">
+            {{getErrorUsername()}}
           </mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -22,7 +22,7 @@
             [formControl]="password"
             type="password">
           <mat-error *ngIf="password.invalid">
-            {{getErrorPass()}}
+            {{getErrorPassword()}}
           </mat-error>
         </mat-form-field>
       </div>

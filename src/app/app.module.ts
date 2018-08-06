@@ -31,8 +31,7 @@ import { UserComponent } from './user/user.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
 
-import { CoursesService } from './services/courses.service';
-import { UserService } from './services/user.service';
+
 import { AuthService } from './services/auth.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 
@@ -79,8 +78,6 @@ export function tokenGetter() {
     })
   ],
   providers: [
-    CoursesService,
-    UserService,
     AuthService,
     AuthGuardLogin
   ],

@@ -1,7 +1,7 @@
 import UserCourses from './UserCourses';
 
 export class Course {
-  id: number;
+  id: string;
   title: string;
   status: boolean;
   progress?: number;

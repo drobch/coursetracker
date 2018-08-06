@@ -32,7 +32,7 @@ app.use(passport.session());
 
 require('./config/passport')(passport);
 
-app.use('/user', users);
+app.use('/', users);
 app.use('/', courses);
 
 app.listen(port, () => {

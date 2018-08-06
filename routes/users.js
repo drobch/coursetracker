@@ -24,11 +24,14 @@ router.post('/login', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
+
+  console.log('!password: ', password);
   User.getUserByUsername(username, (err, user) => {
+
     if (err) throw err;
 
     if (!user) {
-      return res.json({success: false, msg: 'User not found'});
+      return res.json({success: false, msg: 'User is not found'});
     }
 
     User.comparePassword(password, user.password, (err, isMatch) => {
