@@ -4,6 +4,7 @@ import { Course } from '../shared/models/course.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,22 +13,24 @@ import { switchMap } from 'rxjs/operators';
 })
 export class CoursesComponent implements OnInit {
 
-  private selectedId: string;
-  courses$: Observable<Course[]>;
+  courses;
   favorites: Set<number> = new Set();
 
   constructor(
+    private authService: AuthService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-/*    this.courses$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.selectedId = params.get('id');
-        return this.coursesService.getCourses();
-      })
-    );*/
+    this.authService.getCourses().subscribe((courses) => {
+          this.courses = courses;
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
   }
+
   addFav(i) {
     if (this.favorites.has(i)) {
       this.favorites.delete(i);

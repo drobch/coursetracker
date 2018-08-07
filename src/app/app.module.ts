@@ -9,6 +9,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
   MatButtonModule,
   MatToolbarModule,
@@ -69,6 +70,7 @@ export function tokenGetter() {
     MatMenuModule,
     MatCheckboxModule,
     MatInputModule,
+    MatProgressBarModule,
     FlexLayoutModule,
     JwtModule.forRoot({
       config: {

@@ -3,9 +3,9 @@
   fxLayout="row wrap">
   <mat-card
     fxFlex="3 1 300px"
-    *ngFor="let i = index; let crs of courses$| async"
+    *ngFor="let i = index; let crs of courses"
     class="course-card">
-    <mat-card-title [routerLink]="['/courses', crs.id]">
+    <mat-card-title [routerLink]="['/courses', crs._id]">
       {{crs.title}}
     </mat-card-title>
     <mat-card-content>
@@ -18,7 +18,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-flat-button (click)="addFav(i)">
-        <i class="material-icons md-18" [class.red-color]="favorites.has(i)">favorite</i>add to favorites
+        <i class="material-icons md-18" [class.clicked]="favorites.has(i)">assignment_turned_in</i>Apply
       </button>
     </mat-card-actions>
   </mat-card>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../shared/models/user.model';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-user',
@@ -21,12 +22,12 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getUser().subscribe(profile => {
-      this.user = profile.user;
-    },
-    err => {
-      console.log(err);
-      return false;
-    });
+        this.user = profile.user;
+      },
+      err => {
+        console.log(err);
+        this.router.navigate(['/login']);
+      });
   }
 
 }

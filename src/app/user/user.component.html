@@ -1,29 +1,17 @@
-<div class="card">
-  <h4 class="card-header">Account settings</h4>
-  <div class="card-body">
+<mat-card *ngIf="user">
+  <h3>{{user.username}}'s courses profile</h3>
+
+  <mat-tab-group>
+    <mat-tab label="All courses">
+dtdst
+    </mat-tab>
+    <mat-tab label="Proceeded">
+sdthsdht
+    </mat-tab>
+    <mat-tab label="Finished">
+sthsdeht
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
 
 
-    <p>Hello, {{user.username}}</p>
-    <form #accountForm="ngForm">
-      <div>
-        <input
-          class="form-control"
-          type="text" name="username"
-          [(ngModel)]="user.username"
-          placeholder="Username"
-          required>
-      </div>
-      <div>
-        <input
-          class="form-control"
-          type="email" name="email"
-          [(ngModel)]="user.email"
-          placeholder="Email"
-          required>
-      </div>
-      <button class="mat-button" type="submit" [disabled]="!accountForm.form.valid">
-        Save
-      </button>
-    </form>
-  </div>
-</div>

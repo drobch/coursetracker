@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const UserCourses = require('../models/usercourse');
 
 router.post('/register', (req, res, next) => {
   let newUser = new User({
@@ -24,24 +25,17 @@ router.post('/login', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
-
-  console.log('!password: ', password);
   User.getUserByUsername(username, (err, user) => {
-
     if (err) throw err;
-
     if (!user) {
       return res.json({success: false, msg: 'User is not found'});
     }
-
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
-
       if(isMatch) {
         const token = jwt.sign(user.toJSON(), config.secret, {
           expiresIn: 604800 // 1 week
         });
-
         res.json({
           success: true,
           token: `Bearer ${token}`,
@@ -60,7 +54,14 @@ router.post('/login', (req, res, next) => {
 
 
 router.get('/account', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-  res.json({user: req.user});
+  UserCourses.getCoursesByUserId(req.user._id, (err, courses) => {
+    if(err) throw err;
+
+    res.json({
+      user: req.user,
+      courses: courses
+    });
+  })
 });
 
 module.exports = router;

@@ -21,15 +21,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
-              private router: Router) {
-  }
+              private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: this.username,
       password: this.password
     });
-    console.log(this.loginForm);
   }
 
   getErrorUsername() {
