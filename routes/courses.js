@@ -26,6 +26,7 @@ router.post('/courses/add', (req, res, next) => {
   });
   Course.addCourse(newCourse, (err, course) => {
     if (err) {
+      console.log(course)
       res.json({success: false, msg: 'Failed to add a course'})
     } else {
       res.json({success: true, msg: 'Course added'});

@@ -4,16 +4,15 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { map, catchError } from 'rxjs/operators';
 import {User} from '../shared/models/user.model';
 import {Router} from '@angular/router';
+import { JwtHelperService  } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   user: any;
   authToken: any;
-
-
-  constructor(private http: HttpClient,
+  constructor(public jwtHelper: JwtHelperService,
+              private http: HttpClient,
               private router: Router) {}
 
   registerUser(user: User) {
@@ -42,6 +41,10 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  loggedIn() {
+    return this.jwtHelper.isTokenExpired();
   }
 
   storeUserData (token, user) {

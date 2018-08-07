@@ -10,7 +10,6 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -22,5 +21,9 @@ export class NavbarComponent {
 
     onLogout() {
       this.authService.logout();
+    }
+
+    isLoggedIn () {
+      this.authService.loggedIn();
     }
 }
